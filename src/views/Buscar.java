@@ -53,7 +53,7 @@ public class Buscar extends JFrame {
 	 * Create the frame.
 	 */
 	public Buscar() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Buscar.class.getResource("/imagenes/lOGO-50PX.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Buscar.class.getResource("/imagensView/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
 		contentPane = new JPanel();
@@ -86,7 +86,7 @@ public class Buscar extends JFrame {
 		tbReservas = new JTable();
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagenes/reservado.png")), tbReservas, null);
+		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagensView/reservado.png")), tbReservas, null);
 		modelo = (DefaultTableModel) tbReservas.getModel();
 		modelo.addColumn("Numero de Reserva");
 		modelo.addColumn("Data Check In");
@@ -98,7 +98,7 @@ public class Buscar extends JFrame {
 		tbHospedes = new JTable();
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/imagenes/pessoas.png")), tbHospedes, null);
+		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/imagensView/pessoas.png")), tbHospedes, null);
 		modeloHospedes = (DefaultTableModel) tbHospedes.getModel();
 		modeloHospedes.addColumn("Numero de Hóspede");
 		modeloHospedes.addColumn("Nome");
@@ -109,7 +109,7 @@ public class Buscar extends JFrame {
 		modeloHospedes.addColumn("Numero de Reserva");
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagenes/Ha-100px.png")));
+		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagensView/Ha-100px.png")));
 		lblNewLabel_2.setBounds(56, 51, 104, 107);
 		contentPane.add(lblNewLabel_2);
 		

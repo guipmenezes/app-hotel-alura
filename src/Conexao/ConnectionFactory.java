@@ -17,7 +17,7 @@ public class ConnectionFactory {
 		comboPooledDataSource.setUser("root");
 		comboPooledDataSource.setPassword("root");
 		
-		dataSource = comboPooledDataSource;
+		this.dataSource = comboPooledDataSource;
 	}
 	
 	public Connection recuperarConexao() {
