@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import Modelo.Hospedes;
 
 public class HospedesDAO {
@@ -17,16 +19,20 @@ public class HospedesDAO {
 	
 	public void salvar(Hospedes hospede) {
 		try {
-			String sql = "INSERT INTO hospedes(NOME, SOBRENOME, DATA_NASCIMENTO, NACIONALIDADE, TELEFONE) VALUES(?,?,?,?,?,?)";
+			String sql = "INSERT INTO hospedes(NOME, SOBRENOME, DATA_NASCIMENTO, NACIONALIDADE, TELEFONE) VALUES(?,?,?,?,?)";
 			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstm.setString(2, hospede.getNome());
-			pstm.setString(3, hospede.getSobrenome());
-			pstm.setDate(4, hospede.getDataNascimento());
-			pstm.setString(5, hospede.getNacionalidade());
-			pstm.setString(6, hospede.getTelefone());
+			pstm.setString(1, hospede.getNome());
+			pstm.setString(2, hospede.getSobrenome());
+			pstm.setDate(3, hospede.getDataNascimento());
+			pstm.setString(4, hospede.getNacionalidade());
+			pstm.setString(5, hospede.getTelefone());
 			
-			pstm.executeUpdate();
+			if(pstm.executeUpdate() > 0) {
+				System.out.println("Foi cadastrado com sucesso");
+			} else {
+				System.out.println("Não foi possível cadastrar o hospede");
+			}
 			
 			try (ResultSet rst = pstm.getGeneratedKeys()){
 				while(rst.next()) {

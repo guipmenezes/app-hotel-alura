@@ -17,13 +17,13 @@ public class ReservaDAO {
 	
 	public void salvar(Reservas reserva) {
 		try {
-			String sql = "INSERT INTO reservas(DATA_ENTRADA, DATA_SAIDA, VALOR, FORMA_PAGAMENTO) VALUES (?,?,?,?,?)";
+			String sql = "INSERT INTO reservas(DATA_ENTRADA, DATA_SAIDA, VALOR, FORMA_PAGAMENTO) VALUES (?,?,?,?)";
 			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstm.setDate(2, reserva.getDataEntrada());
-			pstm.setDate(3, reserva.getDataSaida());
-			pstm.setString(4, reserva.getValor());
-			pstm.setString(5, reserva.getFormaPagamento());
+			pstm.setDate(1, reserva.getDataEntrada());
+			pstm.setDate(2, reserva.getDataSaida());
+			pstm.setString(3, reserva.getValor());
+			pstm.setString(4, reserva.getFormaPagamento());
 				
 			pstm.executeUpdate();
 				
