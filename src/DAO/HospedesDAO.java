@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.swing.JOptionPane;
-
 import Modelo.Hospedes;
 
 public class HospedesDAO {
@@ -20,6 +18,7 @@ public class HospedesDAO {
 	public void salvar(Hospedes hospede) {
 		try {
 			String sql = "INSERT INTO hospedes(NOME, SOBRENOME, DATA_NASCIMENTO, NACIONALIDADE, TELEFONE) VALUES(?,?,?,?,?)";
+			//Para as outras ações de get por ex, é necessário fazer uma função buscar passando uma string pra fazer a busca no bd
 			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, hospede.getNome());
@@ -41,7 +40,7 @@ public class HospedesDAO {
 			}
 			
 		} catch (Exception e) {
-			
+			throw new RuntimeException("Não foi possível cadastrar o hospede");
 		}
 	}
 

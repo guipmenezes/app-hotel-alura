@@ -7,10 +7,10 @@ public class Reservas {
 	private Integer id;
 	private Date dataEntrada;
 	private Date dataSaida;
-	private String valor;
+	private Integer valor;
 	private String formaPagamento;
 	
-	public Reservas(Date dataEntrada, Date dataSaida, String valor, String formaPagamento) {
+	public Reservas(Date dataEntrada, Date dataSaida, Integer valor, String formaPagamento) {
 		super();
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;
@@ -18,7 +18,7 @@ public class Reservas {
 		this.formaPagamento = formaPagamento;
 	}
 	
-	public Reservas(Integer id, Date dataEntrada, Date dataSaida, String valor, String formaPagamento) {
+	public Reservas(Integer id, Date dataEntrada, Date dataSaida, Integer valor, String formaPagamento) {
 		super();
 		this.id = id;
 		this.dataEntrada = dataEntrada;
@@ -39,7 +39,7 @@ public class Reservas {
 	public Date getDataSaida() {
 		return dataSaida;
 	}
-	public String getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 	public String getFormaPagamento() {

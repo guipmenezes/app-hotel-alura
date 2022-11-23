@@ -17,12 +17,12 @@ public class ReservaDAO {
 	
 	public void salvar(Reservas reserva) {
 		try {
-			String sql = "INSERT INTO reservas(DATA_ENTRADA, DATA_SAIDA, VALOR, FORMA_PAGAMENTO) VALUES (?,?,?,?)";
+			String sql = "INSERT INTO reservas(data_entrada, data_saida, valor, forma_pagamento) VALUES (?,?,?,?)";
 			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setDate(1, reserva.getDataEntrada());
 			pstm.setDate(2, reserva.getDataSaida());
-			pstm.setString(3, reserva.getValor());
+			pstm.setInt(3, reserva.getValor());
 			pstm.setString(4, reserva.getFormaPagamento());
 				
 			pstm.executeUpdate();
@@ -33,7 +33,7 @@ public class ReservaDAO {
 				}
 			}
 		} catch(Exception e) {
-			
+			System.out.println("Erro" + e);
 		}
 	}
 }

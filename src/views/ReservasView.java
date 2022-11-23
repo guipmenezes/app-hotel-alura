@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.Format;
 
@@ -150,7 +151,7 @@ public class ReservasView extends JFrame {
 		txtDataS.setFont(new Font("Roboto", Font.PLAIN, 18));
 		txtDataS.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+				
 			}
 		});
 		txtDataS.setDateFormatString("yyyy-MM-dd");
@@ -170,6 +171,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
+		txtValor.setText(valorReserva().toString());
 		
 		JLabel lblValor = new JLabel("VALOR DA RESERVA");
 		lblValor.setForeground(SystemColor.textInactiveText);
@@ -306,8 +308,6 @@ public class ReservasView extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {		
 					salvarReserva();
-//					RegistroHospede registro = new RegistroHospede();
-//					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}
@@ -327,13 +327,28 @@ public class ReservasView extends JFrame {
 		btnProximo.add(lblSeguinte);
 	}
 	
+	public Date dataSql(String data) {
+		return java.sql.Date.valueOf(data);
+	}
+	
+	public Integer valorReserva() {
+		return 5 * 10;
+	}
+	
 	public void salvarReserva() {
-		String dataEntrada = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
-		String dataSaida = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
-		String valor =(txtValor.getText());
-		Reservas reserva = new Reservas(java.sql.Date.valueOf(dataEntrada), java.sql.Date.valueOf(dataSaida), valor, txtFormaPagamento.getSelectedItem().toString());
-		reservaController.salvaReserva(reserva);
-		JOptionPane.showMessageDialog(contentPane, "A reserva foi realizada.");
+		try {
+			String dataEntrada = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
+			String dataSaida = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
+			Integer valor = Integer.parseInt(txtValor.getText());
+			Reservas reserva = new Reservas(dataSql(dataEntrada), dataSql(dataSaida), valor, txtFormaPagamento.getSelectedItem().toString());
+			reservaController.salvaReserva(reserva);
+			JOptionPane.showMessageDialog(contentPane, "A reserva foi realizada.");
+			
+		} catch(Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível realizar a reserva");
+			System.out.println(e);
+		}
+		
 	}
 
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
