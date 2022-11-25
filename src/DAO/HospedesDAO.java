@@ -17,7 +17,7 @@ public class HospedesDAO {
 	
 	public void salvar(Hospedes hospede) {
 		try {
-			String sql = "INSERT INTO hospedes(NOME, SOBRENOME, DATA_NASCIMENTO, NACIONALIDADE, TELEFONE) VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO hospedes(nome, sobrenome, data_nascimento, nacionalidade, telefone) VALUES(?,?,?,?,?)";
 			//Para as outras ações de get por ex, é necessário fazer uma função buscar passando uma string pra fazer a busca no bd
 			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

@@ -321,13 +321,19 @@ public class RegistroHospede extends JFrame {
 	}
 	
 	public void salvarHospede() {
-		String nome = (txtNome.getText());
-		String sobrenome = (txtSobrenome.getText());
-		String dataNascimento = ((JTextField)txtDataN.getDateEditor().getUiComponent()).getText();
-		String telefone = (txtTelefone.getText());
-		Hospedes cadastroHospede = new Hospedes(nome, sobrenome, java.sql.Date.valueOf(dataNascimento), txtNacionalidade.getSelectedItem().toString(),telefone);
-		hospedesController.salvarHospede(cadastroHospede);
-		JOptionPane.showMessageDialog(contentPane, "O hospede foi cadastrado com sucesso.");
+		try {
+			String nome = (txtNome.getText());
+			String sobrenome = (txtSobrenome.getText());
+			String dataNascimento = ((JTextField)txtDataN.getDateEditor().getUiComponent()).getText();
+			String telefone = (txtTelefone.getText());
+			Hospedes cadastroHospede = new Hospedes(nome, sobrenome, java.sql.Date.valueOf(dataNascimento), txtNacionalidade.getSelectedItem().toString(),telefone);
+			hospedesController.salvarHospede(cadastroHospede);
+			JOptionPane.showMessageDialog(contentPane, "O hospede foi cadastrado com sucesso.");
+		} catch(Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível cadastrar o hospede.");
+			System.out.println(e);
+		}
+		
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" y "y"
