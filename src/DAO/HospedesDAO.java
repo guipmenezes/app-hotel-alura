@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import Modelo.Hospedes;
+import Modelo.Reservas;
 
 public class HospedesDAO {
 	
@@ -41,6 +42,18 @@ public class HospedesDAO {
 			
 		} catch (Exception e) {
 			throw new RuntimeException("Não foi possível cadastrar o hospede");
+		}
+	}
+	
+	public void buscar(Hospedes hospede) {
+		try {
+			String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
+			
+			PreparedStatement pstm = connection.prepareStatement(sql);
+			pstm.setString(1, hospede.getNome());
+			pstm.setString(2, hospede.getSobrenome());
+		} catch(Exception e) {
+			System.out.println("Não foi possível encontrar o hospede.");
 		}
 	}
 

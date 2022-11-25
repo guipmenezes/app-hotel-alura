@@ -10,6 +10,11 @@ public class Reservas {
 	private Integer valor;
 	private String formaPagamento;
 	
+	public Reservas(Integer id) {
+		super();
+		this.id = id;
+	}
+	
 	public Reservas(Date dataEntrada, Date dataSaida, Integer valor, String formaPagamento) {
 		super();
 		this.dataEntrada = dataEntrada;

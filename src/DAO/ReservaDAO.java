@@ -11,6 +11,8 @@ public class ReservaDAO {
 
 	private Connection connection;
 	
+	public Reservas reserva;
+	
 	public ReservaDAO(Connection connection) {
 		this.connection = connection;
 	}
@@ -37,9 +39,9 @@ public class ReservaDAO {
 		}
 	}
 	
-	public void buscaReserva(Reservas reserva) {
+	public void buscar(Reservas reserva) {
 		try {
-			String sql = "SELECT * FROM reserva WHERE id = ?";
+			String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
 			
 			PreparedStatement pstm = connection.prepareStatement(sql);
 			pstm.setInt(1, reserva.getId());

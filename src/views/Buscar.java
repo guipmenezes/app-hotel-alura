@@ -1,24 +1,29 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import Controller.HospedesController;
+import Controller.ReservaController;
+import Modelo.Hospedes;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
@@ -32,6 +37,7 @@ public class Buscar extends JFrame {
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
+	private HospedesController hospedeController;
 
 	/**
 	 * Launch the application.
@@ -53,6 +59,7 @@ public class Buscar extends JFrame {
 	 * Create the frame.
 	 */
 	public Buscar() {
+		HospedesController hospedeController = new HospedesController();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Buscar.class.getResource("/imagensView/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -203,7 +210,7 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				buscarHospede();
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -247,6 +254,17 @@ public class Buscar extends JFrame {
 		lblExcluir.setBounds(0, 0, 122, 35);
 		btnDeletar.add(lblExcluir);
 		setResizable(false);
+	}
+	
+	public void buscarHospede() {
+		try {
+			String busca = (txtBuscar.getText());
+			Hospedes hospede = new Hospedes(busca);
+			hospedeController.buscarHospede(hospede);
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
