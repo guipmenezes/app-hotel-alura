@@ -3,16 +3,26 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
+import Conexao.ConnectionFactory;
 import Modelo.Hospedes;
-import Modelo.Reservas;
 
 public class HospedesDAO {
 	
 	private Connection connection;
+	public PreparedStatement pstm;
+	public ResultSet rs;
+	public Hospedes hospede;
+	public ArrayList<Hospedes> lista = new ArrayList<>();
 	
-	public HospedesDAO(Connection connection) {
+	public HospedesDAO() {}
+	
+	public HospedesDAO(Connection connection){
 		this.connection = connection;
 	}
 	
@@ -21,7 +31,7 @@ public class HospedesDAO {
 			String sql = "INSERT INTO hospedes(nome, sobrenome, data_nascimento, nacionalidade, telefone) VALUES(?,?,?,?,?)";
 			//Para as outras ações de get por ex, é necessário fazer uma função buscar passando uma string pra fazer a busca no bd
 			
-			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, hospede.getNome());
 			pstm.setString(2, hospede.getSobrenome());
 			pstm.setDate(3, hospede.getDataNascimento());
@@ -40,21 +50,40 @@ public class HospedesDAO {
 				}
 			}
 			
+			pstm.close();
+			
 		} catch (Exception e) {
 			throw new RuntimeException("Não foi possível cadastrar o hospede");
 		}
 	}
 	
-	public void buscar(Hospedes hospede) {
+	public ArrayList<Hospedes> buscar() {
+		String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
+		connection = new ConnectionFactory().recuperarConexao();
+		
 		try {
-			String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
-			
-			PreparedStatement pstm = connection.prepareStatement(sql);
+			pstm = connection.prepareStatement(sql);
 			pstm.setString(1, hospede.getNome());
 			pstm.setString(2, hospede.getSobrenome());
-		} catch(Exception e) {
-			System.out.println("Não foi possível encontrar o hospede.");
+			
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				Hospedes hospedeBusca = new Hospedes();
+				hospedeBusca.setId(rs.getInt("id"));
+				hospedeBusca.setNome(rs.getString("nome"));
+				hospedeBusca.setSobrenome(rs.getString("sobrenome"));
+				hospedeBusca.setDataNascimento(rs.getDate("data_nascimento"));
+				hospedeBusca.setNacionalidade(rs.getString("nacionalidade"));
+				
+				lista.add(hospedeBusca);
+			}
+			
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Hospede pesquisar: " + e);
 		}
+		
+		return lista;
 	}
 
 }
