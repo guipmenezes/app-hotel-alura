@@ -29,7 +29,6 @@ public class HospedesDAO {
 	public void salvar(Hospedes hospede) {
 		try {
 			String sql = "INSERT INTO hospedes(nome, sobrenome, data_nascimento, nacionalidade, telefone) VALUES(?,?,?,?,?)";
-			//Para as outras ações de get por ex, é necessário fazer uma função buscar passando uma string pra fazer a busca no bd
 			
 			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, hospede.getNome());
@@ -57,14 +56,13 @@ public class HospedesDAO {
 		}
 	}
 	
-	public ArrayList<Hospedes> buscar() {
-		String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
+	public ArrayList<Hospedes> buscar(String nome) {
+		String sql = "SELECT * FROM hospedes WHERE nome = ?";
 		connection = new ConnectionFactory().recuperarConexao();
 		
 		try {
-			pstm = connection.prepareStatement(sql);
-			pstm.setString(1, hospede.getNome());
-			pstm.setString(2, hospede.getSobrenome());
+			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm.setString(1, nome);
 			
 			rs = pstm.executeQuery();
 			
@@ -75,6 +73,7 @@ public class HospedesDAO {
 				hospedeBusca.setSobrenome(rs.getString("sobrenome"));
 				hospedeBusca.setDataNascimento(rs.getDate("data_nascimento"));
 				hospedeBusca.setNacionalidade(rs.getString("nacionalidade"));
+				hospedeBusca.setTelefone(rs.getString("telefone"));
 				
 				lista.add(hospedeBusca);
 			}

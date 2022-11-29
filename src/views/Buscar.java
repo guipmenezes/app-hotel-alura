@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.HospedesController;
 import DAO.HospedesDAO;
 import Modelo.Hospedes;
 
@@ -262,18 +263,20 @@ public class Buscar extends JFrame {
 
 	private void buscarValores() {
 		try {
+			String entradaTexto = (txtBuscar.getText());
+
 			HospedesDAO hospedesBusca = new HospedesDAO();
 
 			DefaultTableModel model = (DefaultTableModel) tbHospedes.getModel();
 			model.setNumRows(0);
 
-			ArrayList<Hospedes> lista = hospedesBusca.buscar();
+			ArrayList<Hospedes> lista = hospedesBusca.buscar(entradaTexto);
 
 			for (int num = 0; num < lista.size(); num++) {
 				model.addRow(new Object[] { 
-						lista.get(num).getId(), 
+						lista.get(num).getId(),
 						lista.get(num).getNome(),
-						lista.get(num).getSobrenome(), 
+						lista.get(num).getSobrenome(),
 						lista.get(num).getDataNascimento(),
 						lista.get(num).getNacionalidade(),
 						lista.get(num).getTelefone() });

@@ -12,7 +12,11 @@ public class Hospedes {
 	private String telefone;
 	
 	public Hospedes() {
-		super();
+		
+	}
+	
+	public Hospedes(String nome) {
+		this.nome = nome;
 	}
 	
 	public Hospedes(String nome, String sobrenome, Date dataNascimento, String nacionalidade, String telefone) {
