@@ -3,15 +3,23 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
+import Conexao.ConnectionFactory;
 import Modelo.Reservas;
 
 public class ReservaDAO {
 
 	private Connection connection;
-	
 	public Reservas reserva;
+	public ResultSet rs;
+	public ArrayList<Reservas> lista = new ArrayList<>();
+	
+	public ReservaDAO() {}
 	
 	public ReservaDAO(Connection connection) {
 		this.connection = connection;
@@ -39,14 +47,31 @@ public class ReservaDAO {
 		}
 	}
 	
-	public void buscar(Reservas reserva) {
+	public ArrayList<Reservas> buscarReserva(String nome) {
+		String sql = "SELECT * FROM hospedes INNER JOIN reservas ON reservas.id = hospedes.id WHERE nome = ?";
+		connection = new ConnectionFactory().recuperarConexao();
+		
 		try {
-			String sql = "SELECT * FROM hospedes WHERE nome = ? OR sobrenome = ?";
+			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstm.setString(1, nome);
 			
-			PreparedStatement pstm = connection.prepareStatement(sql);
-			pstm.setInt(1, reserva.getId());
-		} catch(Exception e) {
-			System.out.println("Não foi possível achar a reserva.");
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				Reservas reservaBusca = new Reservas();
+				reservaBusca.setId(rs.getInt("id"));
+				reservaBusca.setDataEntrada(rs.getDate("data_entrada"));
+				reservaBusca.setDataSaida(rs.getDate("data_saida"));
+				reservaBusca.setValor(rs.getInt("valor"));
+				reservaBusca.setFormaPagamento(rs.getString("forma_pagamento"));
+				
+				lista.add(reservaBusca);
+			}
+			
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Reserva pesquisar: " + e);
 		}
+		
+		return lista;
 	}
 }

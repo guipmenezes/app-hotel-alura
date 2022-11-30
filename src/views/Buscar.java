@@ -23,9 +23,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Controller.HospedesController;
 import DAO.HospedesDAO;
+import DAO.ReservaDAO;
 import Modelo.Hospedes;
+import Modelo.Reservas;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
@@ -101,11 +102,11 @@ public class Buscar extends JFrame {
 		modelo.addColumn("Data Check Out");
 		modelo.addColumn("Valor");
 		modelo.addColumn("Forma de Pago");
-
+		
 		tbHospedes = new JTable();
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/imagensView/pessoas.png")), tbHospedes, null);
+		panel.addTab("Hospedes", new ImageIcon(Buscar.class.getResource("/imagensView/pessoas.png")), tbHospedes, null);
 		modeloHospedes = (DefaultTableModel) tbHospedes.getModel();
 		modeloHospedes.addColumn("Numero de Hóspede");
 		modeloHospedes.addColumn("Nome");
@@ -114,7 +115,8 @@ public class Buscar extends JFrame {
 		modeloHospedes.addColumn("Nacionalidade");
 		modeloHospedes.addColumn("Telefone");
 		modeloHospedes.addColumn("Numero de Reserva");
-
+		
+		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagensView/Ha-100px.png")));
 		lblNewLabel_2.setBounds(56, 51, 104, 107);
@@ -216,6 +218,7 @@ public class Buscar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				buscarValores();
+				buscarReserva();
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -284,6 +287,31 @@ public class Buscar extends JFrame {
 
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(contentPane, "Listas valores: " + e);
+		}
+	}
+	
+	private void buscarReserva() {
+		try{
+			String entradaTexto = (txtBuscar.getText());
+
+		
+			ReservaDAO reservaBusca = new ReservaDAO();
+			
+			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
+			model.setNumRows(0);
+			
+			ArrayList<Reservas> lista = reservaBusca.buscarReserva(entradaTexto);
+			
+			for (int num = 0; num < lista.size(); num ++) {
+				model.addRow(new Object[] { 
+						lista.get(num).getId(),
+						lista.get(num).getDataEntrada(),
+						lista.get(num).getDataSaida(),
+						lista.get(num).getValor(),
+						lista.get(num).getFormaPagamento() });
+			}
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(contentPane, "Lista Reservas: " + e);
 		}
 	}
 

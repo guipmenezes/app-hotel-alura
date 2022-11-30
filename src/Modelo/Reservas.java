@@ -10,10 +10,7 @@ public class Reservas {
 	private Integer valor;
 	private String formaPagamento;
 	
-	public Reservas(Integer id) {
-		super();
-		this.id = id;
-	}
+	public Reservas() {}
 	
 	public Reservas(Date dataEntrada, Date dataSaida, Integer valor, String formaPagamento) {
 		super();
@@ -41,14 +38,26 @@ public class Reservas {
 	public Date getDataEntrada() {
 		return dataEntrada;
 	}
+	public void setDataEntrada(Date dataEntrada) {
+		this.dataEntrada = dataEntrada;
+	}
 	public Date getDataSaida() {
 		return dataSaida;
+	}
+	public void setDataSaida(Date dataSaida) {
+		this.dataSaida = dataSaida;
 	}
 	public Integer getValor() {
 		return valor;
 	}
+	public void setValor(Integer valor) {
+		this.valor = valor;
+	}
 	public String getFormaPagamento() {
 		return formaPagamento;
+	}
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 	
 	
