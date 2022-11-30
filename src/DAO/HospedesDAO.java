@@ -27,9 +27,9 @@ public class HospedesDAO {
 	}
 	
 	public void salvar(Hospedes hospede) {
+		String sql = "INSERT INTO hospedes(nome, sobrenome, data_nascimento, nacionalidade, telefone) VALUES(?,?,?,?,?)";
+		
 		try {
-			String sql = "INSERT INTO hospedes(nome, sobrenome, data_nascimento, nacionalidade, telefone) VALUES(?,?,?,?,?)";
-			
 			pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setString(1, hospede.getNome());
 			pstm.setString(2, hospede.getSobrenome());
@@ -37,11 +37,7 @@ public class HospedesDAO {
 			pstm.setString(4, hospede.getNacionalidade());
 			pstm.setString(5, hospede.getTelefone());
 			
-			if(pstm.executeUpdate() > 0) {
-				System.out.println("Foi cadastrado com sucesso");
-			} else {
-				System.out.println("Não foi possível cadastrar o hospede");
-			}
+			pstm.executeUpdate();
 			
 			try (ResultSet rst = pstm.getGeneratedKeys()){
 				while(rst.next()) {
@@ -77,6 +73,8 @@ public class HospedesDAO {
 				
 				lista.add(hospedeBusca);
 			}
+			
+			pstm.close();
 			
 		} catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Hospede pesquisar: " + e);

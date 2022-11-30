@@ -293,8 +293,7 @@ public class Buscar extends JFrame {
 	private void buscarReserva() {
 		try{
 			String entradaTexto = (txtBuscar.getText());
-
-		
+			
 			ReservaDAO reservaBusca = new ReservaDAO();
 			
 			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();

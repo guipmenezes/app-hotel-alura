@@ -26,9 +26,9 @@ public class ReservaDAO {
 	}
 	
 	public void salvar(Reservas reserva) {
-		try {
-			String sql = "INSERT INTO reservas(DATA_ENTRADA, DATA_SAIDA, VALOR, FORMA_PAGAMENTO) VALUES (?,?,?,?)";
-			
+		String sql = "INSERT INTO reservas(DATA_ENTRADA, DATA_SAIDA, VALOR, FORMA_PAGAMENTO) VALUES (?,?,?,?)";
+		
+		try {			
 			PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstm.setDate(1, reserva.getDataEntrada());
 			pstm.setDate(2, reserva.getDataSaida());
@@ -42,6 +42,8 @@ public class ReservaDAO {
 					reserva.setId(rst.getInt(1));
 				}
 			}
+			
+			pstm.close();
 		} catch(Exception e) {
 			System.out.println("Erro" + e);
 		}
@@ -67,6 +69,8 @@ public class ReservaDAO {
 				
 				lista.add(reservaBusca);
 			}
+			
+			pstm.close();
 			
 		} catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Reserva pesquisar: " + e);
