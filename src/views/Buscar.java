@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -15,35 +14,32 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.HospedesDAO;
 import DAO.ReservaDAO;
 import Modelo.Hospedes;
 import Modelo.Reservas;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBuscar;
-	private JTable tbHospedes;
-	private JTable tbReservas;
-	private DefaultTableModel modelo;
-	private DefaultTableModel modeloHospedes;
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
 	public HospedesDAO hospedeDAO;
+	private JTable tbReservas;
+	private JTable tbHospedes;
 
 	/**
 	 * Launch the application.
@@ -93,44 +89,58 @@ public class Buscar extends JFrame {
 		panel.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
+		
+		DefaultTableCellRenderer cellCentralizador = new DefaultTableCellRenderer() {
+			public void setValue(Object value) {
+				setHorizontalAlignment(JLabel.CENTER);
+				super.setValue(value);
+			}
+		};
+
+		JScrollPane scrollPaneReserva = new JScrollPane();
+		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagensView/reservado.png")),
+				scrollPaneReserva, null);
 
 		tbReservas = new JTable();
-		tbReservas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Numero da Reserva", "Data Check In", "Data Check Out", "Valor", "Forma de pgto"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class, Integer.class, String.class
-			};
+		tbReservas.setBorder(null);
+		tbReservas.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Numero da Reserva", "Data Check In", "Data Checkout", "Valor", "Forma pgto" }) {
+			Class[] columnTypes = new Class[] { Integer.class, Object.class, String.class, Integer.class,
+					String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		tbReservas.setToolTipText("");
-		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagensView/reservado.png")), tbReservas,
-				null);
-		panel.setEnabledAt(0, true);
-		modelo = (DefaultTableModel) tbReservas.getModel();
+		scrollPaneReserva.setViewportView(tbReservas);
 		
-		
-		tbHospedes = new JTable();
-		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
-		panel.addTab("Hospedes", new ImageIcon(Buscar.class.getResource("/imagensView/pessoas.png")), tbHospedes, null);
-		modeloHospedes = (DefaultTableModel) tbHospedes.getModel();
-		modeloHospedes.addColumn("Numero de Hóspede");
-		modeloHospedes.addColumn("Nome");
-		modeloHospedes.addColumn("Sobrenome");
-		modeloHospedes.addColumn("Data de Nascimento");
-		modeloHospedes.addColumn("Nacionalidade");
-		modeloHospedes.addColumn("Telefone");
+		tbReservas.getColumn("Numero da Reserva").setCellRenderer(cellCentralizador);
+		tbReservas.getColumn("Data Check In").setCellRenderer(cellCentralizador);
+		tbReservas.getColumn("Data Checkout").setCellRenderer(cellCentralizador);
+		tbReservas.getColumn("Valor").setCellRenderer(cellCentralizador);
+		tbReservas.getColumn("Forma pgto").setCellRenderer(cellCentralizador);
 
+		JScrollPane scrollPaneHospede = new JScrollPane();
+		panel.addTab("Hospedes", new ImageIcon(Buscar.class.getResource("/imagensView/pessoas.png")), scrollPaneHospede,
+				null);
+
+		tbHospedes = new JTable();
+		tbHospedes.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero de Hóspede", "Nome",
+				"Sobrenome", "Data de Nascimento", "Nacionalidade", "Telefone" }) {
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
+
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPaneHospede.setViewportView(tbHospedes);
 		
+		tbHospedes.getColumn("Numero de Hóspede").setCellRenderer(cellCentralizador);
+		tbHospedes.getColumn("Nome").setCellRenderer(cellCentralizador);
+		tbHospedes.getColumn("Sobrenome").setCellRenderer(cellCentralizador);
+		tbHospedes.getColumn("Data de Nascimento").setCellRenderer(cellCentralizador);
+		tbHospedes.getColumn("Nacionalidade").setCellRenderer(cellCentralizador);
+		tbHospedes.getColumn("Telefone").setCellRenderer(cellCentralizador);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagensView/Ha-100px.png")));
@@ -291,38 +301,30 @@ public class Buscar extends JFrame {
 			ArrayList<Hospedes> lista = hospedesBusca.buscar(entradaTexto);
 
 			for (int num = 0; num < lista.size(); num++) {
-				model.addRow(new Object[] { 
-						lista.get(num).getId(),
-						lista.get(num).getNome(),
-						lista.get(num).getSobrenome(),
-						lista.get(num).getDataNascimento(),
-						lista.get(num).getNacionalidade(),
-						lista.get(num).getTelefone() });
+				model.addRow(new Object[] { lista.get(num).getId(), lista.get(num).getNome(),
+						lista.get(num).getSobrenome(), lista.get(num).getDataNascimento(),
+						lista.get(num).getNacionalidade(), lista.get(num).getTelefone() });
 			}
 
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(contentPane, "Listas valores: " + e);
 		}
 	}
-	
+
 	private void buscarReserva() {
-		try{
+		try {
 			String entradaTexto = (txtBuscar.getText());
-			
+
 			ReservaDAO reservaBusca = new ReservaDAO();
-			
+
 			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
 			model.setNumRows(0);
-			
+
 			ArrayList<Reservas> lista = reservaBusca.buscarReserva(entradaTexto);
-			
-			for (int num = 0; num < lista.size(); num ++) {
-				model.addRow(new Object[] { 
-						lista.get(num).getId(),
-						lista.get(num).getDataEntrada(),
-						lista.get(num).getDataSaida(),
-						lista.get(num).getValor(),
-						lista.get(num).getFormaPagamento() });
+
+			for (int num = 0; num < lista.size(); num++) {
+				model.addRow(new Object[] { lista.get(num).getId(), lista.get(num).getDataEntrada(),
+						lista.get(num).getDataSaida(), lista.get(num).getValor(), lista.get(num).getFormaPagamento() });
 			}
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(contentPane, "Lista Reservas: " + e);
@@ -341,6 +343,7 @@ public class Buscar extends JFrame {
 		int y = evt.getYOnScreen();
 		this.setLocation(x - xMouse, y - yMouse);
 	}
+
 	public JTable getTbReservas() {
 		return tbReservas;
 	}
