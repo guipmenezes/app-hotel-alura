@@ -288,7 +288,7 @@ public class RegistroHospede extends JFrame {
 		btnsalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				salvarHospede();
+					salvarHospede();
 			}
 		});
 		btnsalvar.setLayout(null);

@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -27,6 +28,8 @@ import DAO.HospedesDAO;
 import DAO.ReservaDAO;
 import Modelo.Hospedes;
 import Modelo.Reservas;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
@@ -92,16 +95,28 @@ public class Buscar extends JFrame {
 		contentPane.add(panel);
 
 		tbReservas = new JTable();
+		tbReservas.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Numero da Reserva", "Data Check In", "Data Check Out", "Valor", "Forma de pgto"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Integer.class, String.class, String.class, Integer.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		tbReservas.setToolTipText("");
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagensView/reservado.png")), tbReservas,
 				null);
+		panel.setEnabledAt(0, true);
 		modelo = (DefaultTableModel) tbReservas.getModel();
-		modelo.addColumn("Numero de Reserva");
-		modelo.addColumn("Data Check In");
-		modelo.addColumn("Data Check Out");
-		modelo.addColumn("Valor");
-		modelo.addColumn("Forma de Pago");
+		
 		
 		tbHospedes = new JTable();
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -114,7 +129,7 @@ public class Buscar extends JFrame {
 		modeloHospedes.addColumn("Data de Nascimento");
 		modeloHospedes.addColumn("Nacionalidade");
 		modeloHospedes.addColumn("Telefone");
-		modeloHospedes.addColumn("Numero de Reserva");
+
 		
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -325,5 +340,8 @@ public class Buscar extends JFrame {
 		int x = evt.getXOnScreen();
 		int y = evt.getYOnScreen();
 		this.setLocation(x - xMouse, y - yMouse);
+	}
+	public JTable getTbReservas() {
+		return tbReservas;
 	}
 }

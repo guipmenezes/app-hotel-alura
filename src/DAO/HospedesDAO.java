@@ -82,5 +82,9 @@ public class HospedesDAO {
 		
 		return lista;
 	}
+	
+	public void editarHospede() {
+		String sql = "UPDATE hospedes SET ? = ? WHERE ID = ?";
+	}
 
 }
