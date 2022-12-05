@@ -13,6 +13,10 @@ import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -65,9 +69,10 @@ public class ReservasView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 * @throws SQLException 
 	 */
-	public ReservasView() {
+	public ReservasView() throws ParseException {
 		super("Reserva");
 		this.reservaController = new ReservaController();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagensView/aH-40px.png")));
@@ -171,7 +176,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
-		txtValor.setText(valorReserva().toString());
+		txtValor.setText(valorReserva());
 		
 		JLabel lblValor = new JLabel("VALOR DA RESERVA");
 		lblValor.setForeground(SystemColor.textInactiveText);
@@ -334,8 +339,20 @@ public class ReservasView extends JFrame {
 		return java.sql.Date.valueOf(data);
 	}
 	
-	public Integer valorReserva() {
-		return 5 * 10;
+	public String valorReserva() throws ParseException {
+		String dataEntrada = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
+		String dataSaida = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		java.util.Date dataEntradaConvertida = simpleDateFormat.parse(dataEntrada);
+		java.util.Date dataSaidaConvertida = simpleDateFormat.parse(dataSaida);		
+		
+		Long difencaEmMilisegundos = dataSaidaConvertida.getTime() - dataEntradaConvertida.getTime();
+		Long calculoPreco = (difencaEmMilisegundos / 24) * 10;
+		String precoFinal = calculoPreco.toString();
+		
+		return precoFinal;
 	}
 	
 	public void salvarReserva() {
