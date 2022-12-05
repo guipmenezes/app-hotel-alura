@@ -105,11 +105,18 @@ public class HospedesDAO {
 		}
 	}
 	
-	public void deletaHospede() {
+	public void deletaHospede(Integer id) {
+		String sql = "DELETE FROM hospedes WHERE id = ?";
+		connection = new ConnectionFactory().recuperarConexao();
+		
 		try {
-			String sql = "";
-		} catch(Exception e) {
+			PreparedStatement pstm = connection.prepareStatement(sql);
+			pstm.setInt(1, id);
 			
+			pstm.execute();
+			pstm.close();
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro SQL: " + e);		
 		}
 	}
 

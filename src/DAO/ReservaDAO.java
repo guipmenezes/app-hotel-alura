@@ -78,4 +78,39 @@ public class ReservaDAO {
 		
 		return lista;
 	}
+	
+	public void editaReserva(Reservas reserva) {
+		String sql = "UPDATE reservas SET data_entrada = ?, data_saida = ?, valor = ?, forma_pagamento = ? WHERE id = ?";
+		connection = new ConnectionFactory().recuperarConexao();
+		
+		try {
+			PreparedStatement pstm = connection.prepareStatement(sql);
+			pstm.setDate(1, reserva.getDataEntrada());
+			pstm.setDate(2, reserva.getDataSaida());
+			pstm.setInt(3, reserva.getValor());
+			pstm.setString(4, reserva.getFormaPagamento());
+			pstm.setInt(5, reserva.getId());
+			
+			pstm.execute();
+			pstm.close();
+			
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "SQL Error: " + e);
+		}
+	}
+	
+	public void deletaReserva(Integer id) {
+		String sql = "DELETE FROM reservas WHERE id = ?";
+		connection = new ConnectionFactory().recuperarConexao();
+		
+		try {
+			PreparedStatement pstm = connection.prepareStatement(sql);
+			pstm.setInt(1, id);
+			
+			pstm.execute();
+			pstm.close();
+		} catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro SQL: " + e);		
+		}
+	}
 }

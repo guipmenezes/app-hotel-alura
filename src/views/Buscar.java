@@ -130,9 +130,9 @@ public class Buscar extends JFrame {
 				null);
 
 		tbHospedes = new JTable();
+		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setCellSelectionEnabled(true);
 		tbHospedes.setShowGrid(false);
-		tbHospedes.setColumnSelectionAllowed(true);
 		tbHospedes.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero de Hospede", "Nome",
 				"Sobrenome", "Data de Nascimento", "Nacionalidade", "Telefone" }) {
 			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class, String.class,
@@ -278,6 +278,7 @@ public class Buscar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				editaHospede();
+				editaReserva();
 			}
 		});
 
@@ -294,6 +295,14 @@ public class Buscar extends JFrame {
 		btnDeletar.setBounds(767, 508, 122, 35);
 		btnDeletar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnDeletar);
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deletarHospede();
+				deletarReserva();
+				JOptionPane.showMessageDialog(contentPane, "Hospede e Reserva excluídos com sucesso");
+			}
+		});
 
 		JLabel lblExcluir = new JLabel("DELETAR");
 		lblExcluir.setHorizontalAlignment(SwingConstants.CENTER);
@@ -373,6 +382,65 @@ public class Buscar extends JFrame {
 			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+		}
+	}
+	
+	public void editaReserva() {
+		try {
+			ReservaDAO reservaEdita = new ReservaDAO();
+			
+			int setar = tbReservas.getSelectedRow();
+			
+			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
+			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
+			Date dataEntrada = Date.valueOf(model.getValueAt(setar, 1).toString());
+			Date dataSaida = Date.valueOf(model.getValueAt(setar, 2).toString());
+			Integer valor = Integer.parseInt(model.getValueAt(setar, 3).toString());
+			String formaPgto = model.getValueAt(setar, 4).toString();
+			
+			Reservas reserva = new Reservas();
+			reserva.setId(id);
+			reserva.setDataEntrada(dataEntrada);
+			reserva.setDataSaida(dataSaida);
+			reserva.setValor(valor);
+			reserva.setFormaPagamento(formaPgto);
+			
+			reservaEdita.editaReserva(reserva);
+			JOptionPane.showMessageDialog(contentPane, "A reserva foi atualizada com sucesso");
+			
+		} catch(NullPointerException e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+		}
+	}
+	
+	public void deletarHospede() {
+		
+		try {
+			HospedesDAO hospedeDeleta = new HospedesDAO();
+			
+			int setar = tbHospedes.getSelectedRow();
+			
+			DefaultTableModel model = (DefaultTableModel) tbHospedes.getModel();
+			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
+			
+			hospedeDeleta.deletaHospede(id);
+		} catch(Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível deletar: " + e);
+		}
+	}
+	
+	public void deletarReserva() {
+		try {
+			ReservaDAO reservaDeleta = new ReservaDAO();
+			
+			int setar = tbReservas.getSelectedRow();
+			
+			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
+			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
+			
+			reservaDeleta.deletaReserva(id);
+		} catch (Exception e) {
+			
 		}
 	}
 
