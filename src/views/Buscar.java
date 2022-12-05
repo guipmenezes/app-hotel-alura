@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -28,6 +29,7 @@ import DAO.HospedesDAO;
 import DAO.ReservaDAO;
 import Modelo.Hospedes;
 import Modelo.Reservas;
+import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
@@ -89,7 +91,7 @@ public class Buscar extends JFrame {
 		panel.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.setBounds(20, 169, 865, 328);
 		contentPane.add(panel);
-		
+
 		DefaultTableCellRenderer cellCentralizador = new DefaultTableCellRenderer() {
 			public void setValue(Object value) {
 				setHorizontalAlignment(JLabel.CENTER);
@@ -102,6 +104,9 @@ public class Buscar extends JFrame {
 				scrollPaneReserva, null);
 
 		tbReservas = new JTable();
+		tbReservas.setCellSelectionEnabled(true);
+		tbReservas.setColumnSelectionAllowed(true);
+		tbReservas.setShowGrid(false);
 		tbReservas.setBorder(null);
 		tbReservas.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Numero da Reserva", "Data Check In", "Data Checkout", "Valor", "Forma pgto" }) {
@@ -113,7 +118,7 @@ public class Buscar extends JFrame {
 			}
 		});
 		scrollPaneReserva.setViewportView(tbReservas);
-		
+
 		tbReservas.getColumn("Numero da Reserva").setCellRenderer(cellCentralizador);
 		tbReservas.getColumn("Data Check In").setCellRenderer(cellCentralizador);
 		tbReservas.getColumn("Data Checkout").setCellRenderer(cellCentralizador);
@@ -125,23 +130,27 @@ public class Buscar extends JFrame {
 				null);
 
 		tbHospedes = new JTable();
-		tbHospedes.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero de Hóspede", "Nome",
+		tbHospedes.setCellSelectionEnabled(true);
+		tbHospedes.setShowGrid(false);
+		tbHospedes.setColumnSelectionAllowed(true);
+		tbHospedes.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero de Hospede", "Nome",
 				"Sobrenome", "Data de Nascimento", "Nacionalidade", "Telefone" }) {
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
+			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class, String.class,
+					String.class };
 
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
 			}
 		});
 		scrollPaneHospede.setViewportView(tbHospedes);
-		
-		tbHospedes.getColumn("Numero de Hóspede").setCellRenderer(cellCentralizador);
+
+		tbHospedes.getColumn("Numero de Hospede").setCellRenderer(cellCentralizador);
 		tbHospedes.getColumn("Nome").setCellRenderer(cellCentralizador);
 		tbHospedes.getColumn("Sobrenome").setCellRenderer(cellCentralizador);
 		tbHospedes.getColumn("Data de Nascimento").setCellRenderer(cellCentralizador);
 		tbHospedes.getColumn("Nacionalidade").setCellRenderer(cellCentralizador);
 		tbHospedes.getColumn("Telefone").setCellRenderer(cellCentralizador);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagensView/Ha-100px.png")));
 		lblNewLabel_2.setBounds(56, 51, 104, 107);
@@ -265,6 +274,12 @@ public class Buscar extends JFrame {
 		btnEditar.setBounds(635, 508, 122, 35);
 		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		contentPane.add(btnEditar);
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				editaHospede();
+			}
+		});
 
 		JLabel lblEditar = new JLabel("EDITAR");
 		lblEditar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -328,6 +343,36 @@ public class Buscar extends JFrame {
 			}
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(contentPane, "Lista Reservas: " + e);
+		}
+	}
+
+	private void editaHospede() {
+		try {
+			HospedesDAO hospedeEdita = new HospedesDAO();
+			
+			int setar = tbHospedes.getSelectedRow();
+
+			DefaultTableModel model = (DefaultTableModel) tbHospedes.getModel();
+			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
+			String nome = model.getValueAt(setar, 1).toString();
+			String sobrenome = model.getValueAt(setar, 2).toString();
+			Date dataNascimento = Date.valueOf(model.getValueAt(setar, 3).toString());
+			String nacionalidade = model.getValueAt(setar, 4).toString();
+			String telefone = model.getValueAt(setar, 5).toString();
+
+			Hospedes hospedeEditado = new Hospedes();
+			hospedeEditado.setId(id);
+			hospedeEditado.setNome(nome);
+			hospedeEditado.setSobrenome(sobrenome);
+			hospedeEditado.setDataNascimento(dataNascimento);
+			hospedeEditado.setNacionalidade(nacionalidade);
+			hospedeEditado.setTelefone(telefone);
+			
+			hospedeEdita.editarHospede(hospedeEditado);
+			JOptionPane.showMessageDialog(contentPane, "Os dados foram atualizados com sucesso.");
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
 		}
 	}
 

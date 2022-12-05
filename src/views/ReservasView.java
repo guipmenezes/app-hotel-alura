@@ -345,7 +345,7 @@ public class ReservasView extends JFrame {
 			Integer valor = Integer.parseInt(txtValor.getText());
 			Reservas reserva = new Reservas(dataSql(dataEntrada), dataSql(dataSaida), valor, txtFormaPagamento.getSelectedItem().toString());
 			reservaController.salvaReserva(reserva);
-			JOptionPane.showMessageDialog(contentPane, "A reserva foi realizada.");
+			JOptionPane.showMessageDialog(contentPane, "A reserva foi realizada. Reserva de número: " + reserva.getId());
 			
 		} catch(Exception e) {
 			JOptionPane.showMessageDialog(contentPane, "Não foi possível realizar a reserva");
