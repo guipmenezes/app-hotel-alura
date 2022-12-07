@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseMotionAdapter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.SystemColor;
@@ -130,7 +131,13 @@ public class MenuUsuario extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ReservasView reservas = new ReservasView();
+				ReservasView reservas = null;
+				try {
+					reservas = new ReservasView();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				reservas.setVisible(true);
 				dispose();
 			}

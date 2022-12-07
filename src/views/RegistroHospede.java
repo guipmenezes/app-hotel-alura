@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.text.Format;
+import java.text.ParseException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -131,7 +132,13 @@ public class RegistroHospede extends JFrame {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ReservasView reservas = new ReservasView();
+				ReservasView reservas = null;
+				try {
+					reservas = new ReservasView();
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				reservas.setVisible(true);
 				dispose();				
 			}

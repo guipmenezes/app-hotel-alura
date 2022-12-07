@@ -171,12 +171,12 @@ public class ReservasView extends JFrame {
 		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
 		txtValor.setForeground(Color.BLACK);
 		txtValor.setBounds(78, 328, 43, 33);
-		txtValor.setEditable(false);
+		txtValor.setEditable(true);
 		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
-		txtValor.setText(valorReserva());
+		txtValor.setText("500");
 		
 		JLabel lblValor = new JLabel("VALOR DA RESERVA");
 		lblValor.setForeground(SystemColor.textInactiveText);
@@ -343,16 +343,19 @@ public class ReservasView extends JFrame {
 		String dataEntrada = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
 		String dataSaida = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
 		
 		java.util.Date dataEntradaConvertida = simpleDateFormat.parse(dataEntrada);
 		java.util.Date dataSaidaConvertida = simpleDateFormat.parse(dataSaida);		
 		
 		Long difencaEmMilisegundos = dataSaidaConvertida.getTime() - dataEntradaConvertida.getTime();
 		Long calculoPreco = (difencaEmMilisegundos / 24) * 10;
-		String precoFinal = calculoPreco.toString();
 		
-		return precoFinal;
+		String diff = calculoPreco + " ";
+		
+		System.out.println(diff);
+		
+		return diff;
 	}
 	
 	public void salvarReserva() {

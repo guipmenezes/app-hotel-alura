@@ -276,8 +276,8 @@ public class Buscar extends JFrame {
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				editaHospede();
 				editaReserva();
+				editaHospede();
 			}
 		});
 
@@ -353,6 +353,34 @@ public class Buscar extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Lista Reservas: " + e);
 		}
 	}
+	
+	public void editaReserva() {
+		try {
+			ReservaDAO reservaEdita = new ReservaDAO();
+
+			Integer setar = tbReservas.getSelectedRow();
+
+			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
+			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
+			Date dataEntrada = Date.valueOf(model.getValueAt(setar, 1).toString());
+			Date dataSaida = Date.valueOf(model.getValueAt(setar, 2).toString());
+			Integer valor = Integer.parseInt(model.getValueAt(setar, 3).toString());
+			String formaPgto = model.getValueAt(setar, 4).toString();
+
+			Reservas reserva = new Reservas();
+			reserva.setId(id);
+			reserva.setDataEntrada(dataEntrada);
+			reserva.setDataSaida(dataSaida);
+			reserva.setValor(valor);
+			reserva.setFormaPagamento(formaPgto);
+
+			reservaEdita.editaReserva(reserva);
+			JOptionPane.showMessageDialog(contentPane, "A reserva foi atualizada com sucesso");
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+		}
+	}
 
 	private void editaHospede() {
 		try {
@@ -383,35 +411,22 @@ public class Buscar extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
 		}
 	}
-
-	public void editaReserva() {
+	
+	public void deletarReserva() {
 		try {
-			ReservaDAO reservaEdita = new ReservaDAO();
+			ReservaDAO reservaDeleta = new ReservaDAO();
 
-			Integer setar = tbReservas.getSelectedRow();
+			int setar = tbReservas.getSelectedRow();
 
 			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
 			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
-			Date dataEntrada = Date.valueOf(model.getValueAt(setar, 1).toString());
-			Date dataSaida = Date.valueOf(model.getValueAt(setar, 2).toString());
-			Integer valor = Integer.parseInt(model.getValueAt(setar, 3).toString());
-			String formaPgto = model.getValueAt(setar, 4).toString();
 
-			Reservas reserva = new Reservas();
-			reserva.setId(id);
-			reserva.setDataEntrada(dataEntrada);
-			reserva.setDataSaida(dataSaida);
-			reserva.setValor(valor);
-			reserva.setFormaPagamento(formaPgto);
-
-			reservaEdita.editaReserva(reserva);
-			JOptionPane.showMessageDialog(contentPane, "A reserva foi atualizada com sucesso");
-
+			reservaDeleta.deletaReserva(id);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+
 		}
 	}
-
+	
 	public void deletarHospede() {
 
 		try {
@@ -425,21 +440,6 @@ public class Buscar extends JFrame {
 			hospedeDeleta.deletaHospede(id);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(contentPane, "Não foi possível deletar: " + e);
-		}
-	}
-
-	public void deletarReserva() {
-		try {
-			ReservaDAO reservaDeleta = new ReservaDAO();
-
-			int setar = tbReservas.getSelectedRow();
-
-			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
-			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
-
-			reservaDeleta.deletaReserva(id);
-		} catch (Exception e) {
-
 		}
 	}
 
