@@ -98,7 +98,7 @@ public class HospedesDAO {
 			pstm.setString(5, hospede.getTelefone());
 			pstm.setInt(6, hospede.getId());
 			
-			pstm.execute();
+			pstm.executeUpdate();
 			pstm.close();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Hospede pesquisar: " + e);

@@ -92,7 +92,7 @@ public class ReservaDAO {
 			pstm.setString(4, reserva.getFormaPagamento());
 			pstm.setInt(5, reserva.getId());
 
-			pstm.execute();
+			pstm.executeUpdate();
 			pstm.close();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "SQL Error: " + e);

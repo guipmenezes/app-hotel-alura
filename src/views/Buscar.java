@@ -42,6 +42,7 @@ public class Buscar extends JFrame {
 	public HospedesDAO hospedeDAO;
 	private JTable tbReservas;
 	private JTable tbHospedes;
+	public Integer setar;
 
 	/**
 	 * Launch the application.
@@ -104,9 +105,6 @@ public class Buscar extends JFrame {
 				scrollPaneReserva, null);
 
 		tbReservas = new JTable();
-		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbReservas.setCellSelectionEnabled(true);
-		tbReservas.setShowGrid(false);
 		tbReservas.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Numero da Reserva", "Data Check In", "Data Checkout", "Valor", "Forma pgto" }) {
 			Class[] columnTypes = new Class[] { Integer.class, Object.class, String.class, Integer.class,
@@ -129,9 +127,6 @@ public class Buscar extends JFrame {
 				null);
 
 		tbHospedes = new JTable();
-		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbHospedes.setCellSelectionEnabled(true);
-		tbHospedes.setShowGrid(false);
 		tbHospedes.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Numero de Hospede", "Nome",
 				"Sobrenome", "Data de Nascimento", "Nacionalidade", "Telefone" }) {
 			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class, String.class,
@@ -250,7 +245,7 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				buscarValores();
+				buscarHospede();
 				buscarReserva();
 			}
 		});
@@ -312,7 +307,7 @@ public class Buscar extends JFrame {
 		setResizable(false);
 	}
 
-	private void buscarValores() {
+	private void buscarHospede() {
 		try {
 			String entradaTexto = (txtBuscar.getText());
 
@@ -357,8 +352,8 @@ public class Buscar extends JFrame {
 	public void editaReserva() {
 		try {
 			ReservaDAO reservaEdita = new ReservaDAO();
-
-			Integer setar = tbReservas.getSelectedRow();
+			
+			setar = tbReservas.getSelectedRow();
 
 			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
 			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
@@ -375,18 +370,17 @@ public class Buscar extends JFrame {
 			reserva.setFormaPagamento(formaPgto);
 
 			reservaEdita.editaReserva(reserva);
-			JOptionPane.showMessageDialog(contentPane, "A reserva foi atualizada com sucesso");
 
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(contentPane, "Ocorreu algo ao editar a reserva: " + e);
 		}
 	}
 
 	private void editaHospede() {
 		try {
 			HospedesDAO hospedeEdita = new HospedesDAO();
-
-			Integer setar = tbHospedes.getSelectedRow();
+			
+			setar = tbHospedes.getSelectedRowCount();
 
 			DefaultTableModel model = (DefaultTableModel) tbHospedes.getModel();
 			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
@@ -407,8 +401,8 @@ public class Buscar extends JFrame {
 			hospedeEdita.editarHospede(hospedeEditado);
 			JOptionPane.showMessageDialog(contentPane, "Os dados foram atualizados com sucesso.");
 
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(contentPane, "Não foi possível editar: " + e);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(contentPane, "Ocorreu algo ao editar o hospede: " + e);
 		}
 	}
 	
