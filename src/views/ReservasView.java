@@ -127,7 +127,7 @@ public class ReservasView extends JFrame {
 
 		lblValorSimbolo = new JLabel("$");
 		lblValorSimbolo.setVisible(false);
-		lblValorSimbolo.setBounds(176, 332, 17, 25);
+		lblValorSimbolo.setBounds(139, 332, 17, 25);
 		lblValorSimbolo.setForeground(SystemColor.textHighlight);
 		lblValorSimbolo.setFont(new Font("Roboto", Font.BOLD, 17));
 
@@ -135,13 +135,13 @@ public class ReservasView extends JFrame {
 
 		JLabel lblCheckIn = new JLabel("DATA DE CHECK IN");
 		lblCheckIn.setForeground(SystemColor.textInactiveText);
-		lblCheckIn.setBounds(68, 136, 169, 14);
+		lblCheckIn.setBounds(68, 136, 289, 14);
 		lblCheckIn.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		panel.add(lblCheckIn);
 
 		JLabel lblCheckOut = new JLabel("DATA DE CHECK OUT");
 		lblCheckOut.setForeground(SystemColor.textInactiveText);
-		lblCheckOut.setBounds(68, 221, 187, 14);
+		lblCheckOut.setBounds(68, 221, 289, 14);
 		lblCheckOut.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		panel.add(lblCheckOut);
 
@@ -167,7 +167,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBackground(SystemColor.text);
 		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
 		txtValor.setForeground(Color.BLACK);
-		txtValor.setBounds(78, 328, 88, 33);
+		txtValor.setBounds(78, 328, 51, 33);
 		txtValor.setEditable(true);
 		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -175,9 +175,9 @@ public class ReservasView extends JFrame {
 		txtValor.setColumns(10);
 		txtValor.setText("58");
 
-		JLabel lblValor = new JLabel("VALOR DA RESERVA - 58$ por dia");
+		JLabel lblValor = new JLabel("VALOR DA RESERVA POR DIA");
 		lblValor.setForeground(SystemColor.textInactiveText);
-		lblValor.setBounds(72, 303, 196, 14);
+		lblValor.setBounds(72, 303, 285, 14);
 		lblValor.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		panel.add(lblValor);
 
@@ -192,7 +192,7 @@ public class ReservasView extends JFrame {
 
 		JLabel lblFormaPago = new JLabel("FORMA DE PAGAMENTO");
 		lblFormaPago.setForeground(SystemColor.textInactiveText);
-		lblFormaPago.setBounds(68, 382, 213, 24);
+		lblFormaPago.setBounds(68, 382, 289, 24);
 		lblFormaPago.setFont(new Font("Roboto Black", Font.PLAIN, 18));
 		panel.add(lblFormaPago);
 
