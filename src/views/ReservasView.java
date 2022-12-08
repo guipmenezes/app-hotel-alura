@@ -15,8 +15,7 @@ import java.sql.SQLException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -176,7 +175,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
-		txtValor.setText("500");
+		txtValor.setText(valorReserva());
 		
 		JLabel lblValor = new JLabel("VALOR DA RESERVA");
 		lblValor.setForeground(SystemColor.textInactiveText);
@@ -340,22 +339,26 @@ public class ReservasView extends JFrame {
 	}
 	
 	public String valorReserva() throws ParseException {
-		String dataEntrada = ((JTextField)txtDataE.getDateEditor().getUiComponent()).getText();
-		String dataSaida = ((JTextField)txtDataS.getDateEditor().getUiComponent()).getText();
+		Calendar dataEntrada = txtDataE.getCalendar();
+		Calendar dataSaida = txtDataS.getCalendar();
+		String valor = "0";
 		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyy");
-		
-		java.util.Date dataEntradaConvertida = simpleDateFormat.parse(dataEntrada);
-		java.util.Date dataSaidaConvertida = simpleDateFormat.parse(dataSaida);		
-		
-		Long difencaEmMilisegundos = dataSaidaConvertida.getTime() - dataEntradaConvertida.getTime();
-		Long calculoPreco = (difencaEmMilisegundos / 24) * 10;
-		
-		String diff = calculoPreco + " ";
-		
-		System.out.println(diff);
-		
-		return diff;
+		if(dataEntrada != null && dataSaida != null) {
+			Long diffEntrada = dataEntrada.getTimeInMillis();
+			Long diffSaida = dataSaida.getTimeInMillis();
+
+			Long difencaEmMilisegundos = diffEntrada - diffSaida;
+			Long calculoPreco = (difencaEmMilisegundos / 24) * 10;
+			
+			if(calculoPreco < 10L) {
+				valor = "500";
+			} else {
+				valor = "1200";
+			}
+		} else {
+			valor = "0";
+		}
+		return valor;
 	}
 	
 	public void salvarReserva() {
