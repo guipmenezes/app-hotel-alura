@@ -273,6 +273,7 @@ public class Buscar extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				editaReserva();
 				editaHospede();
+				JOptionPane.showMessageDialog(contentPane, "Reserva realizada com sucesso.");
 			}
 		});
 
@@ -348,11 +349,11 @@ public class Buscar extends JFrame {
 			JOptionPane.showMessageDialog(contentPane, "Lista Reservas: " + e);
 		}
 	}
-	
+
 	public void editaReserva() {
 		try {
 			ReservaDAO reservaEdita = new ReservaDAO();
-			
+
 			setar = tbReservas.getSelectedRow();
 
 			DefaultTableModel model = (DefaultTableModel) tbReservas.getModel();
@@ -371,16 +372,15 @@ public class Buscar extends JFrame {
 
 			reservaEdita.editaReserva(reserva);
 
-		} catch (ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(contentPane, "Ocorreu algo ao editar a reserva: " + e);
+		} catch (Exception e) {
 		}
 	}
 
 	private void editaHospede() {
 		try {
 			HospedesDAO hospedeEdita = new HospedesDAO();
-			
-			setar = tbHospedes.getSelectedRowCount();
+
+			setar = tbHospedes.getSelectedRow();
 
 			DefaultTableModel model = (DefaultTableModel) tbHospedes.getModel();
 			Integer id = Integer.parseInt(model.getValueAt(setar, 0).toString());
@@ -399,13 +399,10 @@ public class Buscar extends JFrame {
 			hospedeEditado.setTelefone(telefone);
 
 			hospedeEdita.editarHospede(hospedeEditado);
-			JOptionPane.showMessageDialog(contentPane, "Os dados foram atualizados com sucesso.");
-
-		} catch (ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(contentPane, "Ocorreu algo ao editar o hospede: " + e);
+		} catch (Exception e) {
 		}
 	}
-	
+
 	public void deletarReserva() {
 		try {
 			ReservaDAO reservaDeleta = new ReservaDAO();
@@ -420,7 +417,7 @@ public class Buscar extends JFrame {
 
 		}
 	}
-	
+
 	public void deletarHospede() {
 
 		try {

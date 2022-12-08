@@ -195,7 +195,7 @@ public class MenuUsuario extends JFrame {
 		
 	    JPanel panelFecha = new JPanel();
 	    panelFecha.setBackground(new Color(118, 187, 223));
-	    panelFecha.setBounds(256, 84, 688, 121);
+	    panelFecha.setBounds(256, 47, 688, 121);
 	    contentPane.add(panelFecha);
 	    panelFecha.setLayout(null);
 	    
@@ -216,36 +216,41 @@ public class MenuUsuario extends JFrame {
 	    
 	    JLabel lbltitulo = new JLabel("Bem-vindo");
 	    lbltitulo.setFont(new Font("Roboto", Font.BOLD, 24));
-	    lbltitulo.setBounds(302, 234, 147, 46);
+	    lbltitulo.setBounds(308, 196, 147, 46);
 	    contentPane.add(lbltitulo);
 	    
 	    String textoDescripcion = "<html><body>Sistema de reservas de hotéis. Controle e gerencie de forma otimizada e fácil <br> o fluxo de reservas e hóspedes do hotel   </body></html>";
 	    JLabel labelDescripcion_0 = new JLabel(textoDescripcion);
 	    labelDescripcion_0.setFont(new Font("Roboto", Font.PLAIN, 17));
 	   
-	    labelDescripcion_0.setBounds(312, 291, 598, 66);
+	    labelDescripcion_0.setBounds(308, 253, 598, 66);
 	    contentPane.add(labelDescripcion_0);
 	    
 	    String textoDescricao1 = "<html><body> Esta ferramenta permitirá que você mantenha um controle completo e detalhado de suas reservas e hóspedes, você terá acesso a ferramentas especiais para tarefas específicas como:</body></html>";
 	    JLabel labelDescricao_1 = new JLabel(textoDescricao1);
 	    labelDescricao_1.setFont(new Font("Roboto", Font.PLAIN, 17));
-	    labelDescricao_1.setBounds(311, 345, 569, 88);
+	    labelDescricao_1.setBounds(308, 404, 569, 76);
 	    contentPane.add(labelDescricao_1);
 	    
 	    JLabel labelDescricao_2 = new JLabel("- Registro de Reservas e Hóspedes");
 	    labelDescricao_2.setFont(new Font("Roboto", Font.PLAIN, 17));
-	    labelDescricao_2.setBounds(312, 444, 295, 27);
+	    labelDescricao_2.setBounds(308, 487, 295, 27);
 	    contentPane.add(labelDescricao_2);
 	    
 	    JLabel labelDescricao_3 = new JLabel("- Edição de Reservas e Hóspedes existentes");
 	    labelDescricao_3.setFont(new Font("Roboto", Font.PLAIN, 17));
-	    labelDescricao_3.setBounds(312, 482, 355, 27);
+	    labelDescricao_3.setBounds(308, 514, 355, 27);
 	    contentPane.add(labelDescricao_3);
 	    
 	    JLabel labelDescricao_4 = new JLabel("- Excluir todos os tipos de registros");
 	    labelDescricao_4.setFont(new Font("Roboto", Font.PLAIN, 17));
-	    labelDescricao_4.setBounds(312, 520, 295, 27);
+	    labelDescricao_4.setBounds(308, 541, 295, 27);
 	    contentPane.add(labelDescricao_4);
+	    
+	    JLabel labelDescripcion_0_1 = new JLabel("<html>\r\n<body>O valor da reserva é fixo:\r\n<br>\r\n- Primeiro dia: 58$\r\n<br>\r\n- Segundo dia em diante: 36$</body></html>");
+	    labelDescripcion_0_1.setFont(new Font("Dialog", Font.PLAIN, 17));
+	    labelDescripcion_0_1.setBounds(308, 317, 598, 76);
+	    contentPane.add(labelDescripcion_0_1);
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"
