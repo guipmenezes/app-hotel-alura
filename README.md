@@ -33,3 +33,7 @@
 <p>Na tela de busca é possível buscar, que no CRUD é a operação de READ(leitura), também é possível editar e deletar, sendo essas as outras operações CRUD restantes UPDATE(atualizar) e DELETE(deletar).</p>
 <p>No sistema de busca, é possível também visualizar os dados de reserva e do hóspede que foi buscado.</p>
 <img align="center" src="https://user-images.githubusercontent.com/86692306/206863801-eb13a872-bb9c-4232-860b-a19edb45f124.png"/>
+
+## Sobre o banco de dados:
+
+<p>O banco de dados escolhido foi um banco de dados relacional, criado no MySQL e contém duas tabelas: a tabela de reservas e a tabela de hóspedes. Os dados são armazenados e tem o ID como chave-primária nas duas tabelas, sendo o ID também a chave-estrangeira para conectar as reservas e os hóspedes, ou seja, o id da reserva sempre vai ser o mesmo id do hóspede.</p>
