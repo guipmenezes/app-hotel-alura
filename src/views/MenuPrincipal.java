@@ -78,7 +78,7 @@ public class MenuPrincipal extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblCopyR = new JLabel("Desenvolvido por Guilherme Menezes © 2022");
-		lblCopyR.setBounds(315, 11, 301, 19);
+		lblCopyR.setBounds(263, 11, 367, 19);
 		lblCopyR.setForeground(new Color(240, 248, 255));
 		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel_1.add(lblCopyR);
