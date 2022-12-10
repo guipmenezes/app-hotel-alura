@@ -38,5 +38,5 @@
 
 <p>O banco de dados escolhido foi um banco de dados relacional, criado no MySQL e contém duas tabelas: a tabela de reservas e a tabela de hóspedes. Os dados são armazenados e tem o ID como chave-primária nas duas tabelas, sendo o ID também a chave-estrangeira para conectar as reservas e os hóspedes, ou seja, o id da reserva sempre vai ser o mesmo id do hóspede.</p>
 
-##Badge do challenge:
-<img width="400em" height="400em" align="center" src="badge-java-sprint-2.png"/>
+## Badge do challenge:
+<img width="400em" height="400em" align="center" src="src/imagensView/badge-java-sprint-2.png"/>
